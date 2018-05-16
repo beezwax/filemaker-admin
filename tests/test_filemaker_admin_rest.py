@@ -19,7 +19,7 @@ if __name__ == '__main__':
         
 ######
 
-import secrets.py
+import secrets
 
 #######
 
@@ -31,9 +31,13 @@ import secrets.py
 
 def run_tests():
 
-     fa = filemaker_admin_rest (HOSTNAME, AUTHUSER, AUTHPASS,True)
+     fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS,True)
+     print
      print "list_databases:"
      pprint.pprint (fa.list_databases())
+     print
+     print "list_database_names:"
+     pprint.pprint (fa.list_database_names())
      print
      print "get_general_configuration:"
      try:
