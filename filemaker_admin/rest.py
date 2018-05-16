@@ -15,6 +15,10 @@ import pprint
 # https://github.com/requests/requests/issues/2118
 # http://docs.python-requests.org/en/master/user/advanced/#session-objects
 
+# CLOUD
+#   Admin: gateway/lib/fmsadminapi/apis/
+#   Data: Web Publishing/publishing-engine/node-wip/routes/api.js
+
 #from requests_ntlm import HttpNtlmAuth
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
@@ -155,7 +159,18 @@ class filemaker_admin_rest (object):
         response = self._session.get(self._url_base + 'databases', headers=self._GET_header, timeout=self._timeout)
         response.raise_for_status()
         return response.json()
-        
+
+    #
+    #  l i s t _ d a t a b a s e _ n a m e s
+    #
+    
+    def list_database_names (self):
+    	# Files are nested inside of files?!
+    	file_list = self.list_databases()['files']['files']
+    	# Return stripped version with just file names.
+    	print "file_list:", file_list
+    	return map (lambda fi: fi['filename'], file_list)
+
     #
     #  o p e n _ d a t a b a s e
     #
