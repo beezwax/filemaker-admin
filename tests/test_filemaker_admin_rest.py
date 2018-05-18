@@ -31,6 +31,7 @@ import secrets
 
 def run_tests():
 
+     print "login:"
      fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS,True)
      print
      print "list_databases:"
@@ -44,6 +45,7 @@ def run_tests():
          pprint.pprint (fa.get_general_configuration())
      except:
          print "   general configuration unavialable"
+     print
      print "get_security_configuration:"
      print
      try:

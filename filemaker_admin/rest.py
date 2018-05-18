@@ -86,7 +86,7 @@ class filemaker_admin_rest (object):
     
     #  hostname: 
     def login (self, hostname, user, password, usingCloud, port=443):
-        print "login: starting",hostname,user,password,port
+        
         # Set up some convenience variables.
         self._url_prefix = 'https://' + hostname + ':' + str (port)
         if usingCloud:
@@ -109,7 +109,6 @@ class filemaker_admin_rest (object):
 
         # HttpAdapter can be used for some unusual SSL/TLS requirement.
         #session.mount(URL_prefix, Ssl3HttpAdapter())
-        print self._url_base + 'user/login',self.JSONHEADER,self._user_and_pass,self._timeout
         response = self._session.post(
             self._url_base + 'user/login',
             headers=self.JSONHEADER,
