@@ -63,7 +63,7 @@ class filemaker_admin_rest (object):
     
     ###  DE/CONSTRUCTORS  ##
     
-    def __init__(self, hostname, user, password, usingCloud, verify_ssl=True, timeout=10.0):
+    def __init__(self, hostname, user, password, usingCloud=False, port=443, verify_ssl=True, timeout=10.0):
 
         _verify_ssl = verify_ssl
         ## Set the default timeout when this becomes available, probably Requests 3.0:
@@ -85,7 +85,7 @@ class filemaker_admin_rest (object):
     #
     
     #  hostname: 
-    def login (self, hostname, user, password, usingCloud, port=443):
+    def login (self, hostname, user, password, usingCloud=False, port=443):
         
         # Set up some convenience variables.
         self._url_prefix = 'https://' + hostname + ':' + str (port)

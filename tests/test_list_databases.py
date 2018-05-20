@@ -27,7 +27,7 @@ def run_test():
      print
      print
      
-     fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS, True)
+     fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS, usingCloud=False)
      pprint.pprint (fa.list_databases(), indent=4)
      fa.logout()
 

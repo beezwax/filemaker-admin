@@ -31,8 +31,9 @@ import secrets
 
 def run_tests():
 
+     # NOTE: 
      print "login:"
-     fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS,True)
+     fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS, False)
      print
      print "list_databases:"
      pprint.pprint (fa.list_databases())

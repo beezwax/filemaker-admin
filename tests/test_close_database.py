@@ -27,10 +27,8 @@ def run_test():
      print
      print
      
-     fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS, True)
-     
+     fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS, usingCloud=False)
      fa.close_database(2)
-     
      fa.logout()
      
      print
