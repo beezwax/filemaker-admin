@@ -18,7 +18,15 @@ if __name__ == '__main__':
         
         
 #######
+
+# The "secrets.py" file should define:
+#	 HOSTNAME
+#	 AUTHUSER
+#	 AUTHPASS
+#	 USINGCLOUD
+
 import secrets
+
 #######
 
 

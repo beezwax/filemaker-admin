@@ -77,8 +77,9 @@ class filemaker_admin_rest (object):
         self._url_prefix = None
         self._url_base = None
     
-    
-    ###  CONNECTION CALLS  ###
+    ##
+    ##   C O N N E C T I O N   C A L L S
+    ##
     
     #
     #  l o g i n
@@ -275,7 +276,7 @@ class filemaker_admin_rest (object):
         if message != None:
             sm_data = {'message': message[:self.MAXMESSAGELEN]}
 
-        response = self._session.put (self._url_base + str(database_id) + '/close', data=du_data, timeout=self._timeout)
+        response = self._session.put (self._url_base + 'clients/' + int (client_id) + '/message', data=sm_data, timeout=self._timeout)
         
         response.raise_for_status()
         return response.json()['result']
@@ -300,30 +301,6 @@ class filemaker_admin_rest (object):
         return result.json()
 
     #
-    #  g e t _ p h p _ c o n f i g u r a t i o n
-    #
-    
-    #  Not available in FMC
-    
-    def get_php_configuration (self):
-    
-        response = self._session.get(_url_base + 'php/config', headers=self._GET_header, timeout=self._timeout)
-        response.raise_for_status()
-        return result.json()
-
-    #
-    #  g e t _ x m l _ c o n f i g u r a t i o n
-    #
-    
-    #  Not available in FMC
-    
-    def get_xml_configuration (self):
-    
-        response = self._session.get(_url_base + 'xml/config', headers=self._GET_header, timeout=self._timeout)
-        response.raise_for_status()
-        return result.json()['enabled']
-
-    #
     #  g e t _ s e c u r i t y _ c o n f i g u r a t i o n
     #
     
@@ -331,7 +308,7 @@ class filemaker_admin_rest (object):
     
     def get_security_configuration (self):
     
-        response = self._session.get(_url_base + 'server/config/security', headers=self._GET_header, timeout=self._timeout)
+        response = self._session.get(self._url_base + 'server/config/security', headers=self._GET_header, timeout=self._timeout)
         response.raise_for_status()
         return result.json()['requireSecureDB']
 
@@ -344,7 +321,7 @@ class filemaker_admin_rest (object):
     def get_status (self):
     
         response = self._session.get(
-            _url_base + 'server/server/status',
+            self._url_base + 'server/server/status',
             headers=self._GET_header,
             timeout=self._timeout )
         response.raise_for_status()
@@ -520,3 +497,77 @@ class filemaker_admin_rest (object):
         response.raise_for_status()
         return response.json()['schedule']
 
+	##
+	##   P H P
+	##
+	
+    #
+    #  g e t _ p h p _ c o n f i g u r a t i o n
+    #
+    
+    #  Not available in FMC
+    
+    def get_php_configuration (self):
+    
+        response = self._session.get(self._url_base + 'php/config', headers=self._GET_header, timeout=self._timeout)
+        response.raise_for_status()
+        return result.json()
+
+    #
+    #  s e t _ p h p _ c o n f i g
+    #
+
+    #  enable_flag: True to enable the PHP interface
+
+    #  Not available in FMC
+    
+    
+    def set_php_config (self, enable_flag):
+        
+        spc_data = {'enabled': bool (enable_flag))
+        
+        response = self._session.patch (
+            self._url_base + 'php/config',
+            headers=self._GET_header,
+            timeout=self._timeout )
+        response.raise_for_status()
+        return response.json()['result']
+
+
+
+    ##
+    ##   X M L
+    ##
+
+    #
+    #  g e t _ x m l _ c o n f i g u r a t i o n
+    #
+    
+    #  Not available in FMC
+    
+    def get_xml_configuration (self):
+    
+        response = self._session.get(self._url_base + 'xml/config', headers=self._GET_header, timeout=self._timeout)
+        response.raise_for_status()
+        return result.json()['enabled']
+
+
+    #
+    #  s e t _ x m l _ c o n f i g
+    #
+
+    #  enable_flag: True to enable the XML interface
+
+    #  Not available in FMC
+    
+    
+    def set_xml_config (self, enable_flag):
+        
+        sxc_data = {'enabled': bool (enable_flag))
+        
+        response = self._session.patch (
+            self._url_base + 'xml/config',
+            headers=self._GET_header,
+            timeout=self._timeout )
+        response.raise_for_status()
+        return response.json()['result']

@@ -1,20 +1,19 @@
 #!/usr/bin/python
 
-# https://github.com/requests
-
 import json
 import re
+import subprocess
 import sys
-import ssl
 import pprint
 
-######
 
+######
 
 URLPREFIX = "https://" + HOSTNAME
 URLBASE = URLPREFIX + "/admin/api/v1/"
 
 #######
+
 
 # https://docs.python.org/2/library/ssl.html
 # https://github.com/requests/requests/issues/2118
@@ -22,13 +21,12 @@ URLBASE = URLPREFIX + "/admin/api/v1/"
 class filemaker_admin_cli (object):
     """Manage a FileMaker server using the FileMaker Admin Command."""
     
-    JSONHEADER = {'Content-Type': 'application/json'}
     MAXMESSAGELEN = 200 # as defined in API spec
     DATETIME_REGEX = '[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}'
     
     ###  DE/CONSTRUCTORS  ##
     
-    def __init__(self, hostname, user, password, usingCloud, verify_ssl=True, timeout=10.0):
+    def __init__(self, user, password):
 
         _verify_ssl = verify_ssl
         ## Set the default timeout when this becomes available, probably Requests 3.0:
@@ -43,23 +41,33 @@ class filemaker_admin_cli (object):
         self._url_base = None
     
     
-    ###  CONNECTION CALLS  ###
+    ###  COMMANDS  ###
+    
+    # subprocess.check_output(args, *, stdin=None, stderr=None, shell=False, universal_newlines=False)
     
     #
-    #  l o g i n
+    #  s t o p
     #
     
     #  hostname: 
-    def login (self, hostname, user, password, usingCloud, port=443):
-        print "login: starting",hostname,user,password,port
-        # Set up some convenience variables.
-        self._url_prefix = 'https://' + hostname + ':' + str (port)
-        if usingCloud:
-            self._url_base = self._url_prefix + '/admin/api/v1/'
-        else:
-            self._url_base = self._url_prefix + '/fmi/admin/api/v1/'
-        self._user_and_pass = json.dumps ({'username': user, 'password': password})
-        
-        return self.reconnect()
+    def stop (self, user, password, process, force=False, message=None, seconds=None):
     
+        pass
 
+    def start (self, user, password, process):
+    
+        pass
+    
+    def status_client (self, user, password, client_id=None):
+    
+        pass
+    
+    def status_file (self, user, password, file_name=None):
+    
+        pass
+
+    def status_file (self, user, password, file_reference=None):
+    
+        pass
+    
+    

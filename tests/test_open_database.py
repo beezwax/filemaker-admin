@@ -17,6 +17,12 @@ if __name__ == '__main__':
                 
 ######
 
+# The "secrets.py" file should define:
+#	 HOSTNAME
+#	 AUTHUSER
+#	 AUTHPASS
+#	 USINGCLOUD
+
 import secrets
 
 #######
@@ -27,8 +33,8 @@ def run_test():
      print
      print
      
-     fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS, usingCloud=False)
-     pprint.pprint (fa.open_database(2), indent=4)
+     fa = filemaker_admin_rest (secrets.HOSTNAME, secrets.AUTHUSER, secrets.AUTHPASS, usingCloud=USINGCLOUD)
+     print fa.open_database(2)
      fa.logout()
      
      print
