@@ -60,6 +60,18 @@ def run_tests():
      except:
          print "   status unavialable"
      print
+     print "get_php_config:"
+     try:
+         pprint.pprint (fa.get_php_config())
+     except:
+         print "   php config unavialable"
+     print
+     print "get_xml_config:"
+     try:
+         pprint.pprint (fa.get_php_config())
+     except:
+         print "   xml config unavialable"
+     print
      print "disable_schedule:"
      print "  ", fa.disable_schedule (1)
      print
@@ -83,6 +95,9 @@ def run_tests():
      print
      print "open_database:"
      print "  ", fa.open_database(1)
+     print
+     print "send_message:"
+     print "  ", fa.send_message ("test message from API")
      print
      print "logout:"
      print "  ",fa.logout()
