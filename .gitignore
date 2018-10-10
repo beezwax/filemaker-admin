@@ -92,3 +92,6 @@ tests/secrets.py
 
 # mypy
 .mypy_cache/
+
+# Ignore .DS_Store files
+.DS_Store
