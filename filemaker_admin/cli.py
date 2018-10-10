@@ -15,8 +15,7 @@ URLBASE = URLPREFIX + "/admin/api/v1/"
 #######
 
 
-# https://docs.python.org/2/library/ssl.html
-# https://github.com/requests/requests/issues/2118
+# https://docs.python.org/2/library/subprocess.html
 
 class filemaker_admin_cli (object):
     """Manage a FileMaker server using the FileMaker Admin Command."""
@@ -28,7 +27,8 @@ class filemaker_admin_cli (object):
     
     def __init__(self, user, password):
 
-        _verify_ssl = verify_ssl
+        self._fmsadmin_path = '/usr/local/bin/fmsadmin'
+        
         ## Set the default timeout when this becomes available, probably Requests 3.0:
         ##    https://github.com/requests/requests/pull/4560/commits/a91f34038e48652e4aefb949c532014c0b2be81d
         self._timeout = timeout
@@ -52,11 +52,21 @@ class filemaker_admin_cli (object):
     #  hostname: 
     def stop (self, user, password, process, force=False, message=None, seconds=None):
     
-        pass
+        response = subprocess.check_output (self._fmsadmin_path, '-y', 'stop', process)
 
+    #
+    #  s t a r t
+    #
+    
+    # process: possible values are 'ADMINSERVER', 'SERVER', 'FMSE', 'FMSIB', 'XDBC', 'WPE', 'FMDAPI'
+    # OS account running command should be a member of fmsadmin group.
+    
     def start (self, user, password, process):
     
-        pass
+        response = subprocess.check_output (self._fmsadmin_path, 'start', process)
+        
+        return response
+    
     
     def status_client (self, user, password, client_id=None):
     
