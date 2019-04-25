@@ -14,6 +14,7 @@ import pprint
 # https://docs.python.org/2/library/ssl.html
 # https://github.com/requests/requests/issues/2118
 # http://docs.python-requests.org/en/master/user/advanced/#session-objects
+# https://fmhelp.filemaker.com/cloud/17/en/adminapi/index.html
 
 # CLOUD
 #   Admin: gateway/lib/fmsadminapi/apis/
@@ -496,6 +497,45 @@ class filemaker_admin_rest (object):
             timeout=self._timeout )
         response.raise_for_status()
         return response.json()['schedule']
+
+    #
+    #  s e t _ s c h e d u l e _ c r e d e n t i a l s
+    #
+    
+    #  schedule_id: ID as returned by list_schedules
+    
+    def set_schedule_credentials (self, schedule_id, account, password):
+        
+        # We need to specify all required parameters if even just modifying the credentials,
+        # so we'll first get the current settings.
+        response = self._session.get(self._url_base + 'schedules/' + str(schedule_id), headers=self._GET_header, timeout=self._timeout)
+        response.raise_for_status()
+        cur_sched = response.json()['schedules']
+        
+        # Flatten the keys (a difference between getting & setting schedules).
+        sched_script_items = cur_sched[0]['filemakerScriptType']
+        del cur_sched[0]['filemakerScriptType']
+        sched_script_items = cur_sched[0].update (sched_script_items)
+        
+        # Remove everything but required values.
+        required_sched_keys = ['taskType','name','startDate','freqType','filemakerScriptType','fromTarget','fmScriptName','fmScriptAccount','fmScriptPassword']
+        #required_script_keys = ['fromTarget', 'fmScriptName', 'fmScriptAccount', 'fmScriptPassword']
+        unwanted = set(cur_sched[0]) - set (required_sched_keys)
+        for unwanted_key in unwanted:
+           del cur_sched[0][unwanted_key]
+        
+        # Set the two values to be changed.
+        cur_sched[0]['fmScriptAccount'] = account
+        cur_sched[0]['fmScriptPassword'] = password
+        
+        response = self._session.put (
+            self._url_base + 'schedules/' + str(schedule_id),
+            data=cur_sched,
+            timeout=self._timeout )
+        response.raise_for_status()
+        return response.json()['schedules']
+
+
 
 	##
 	##   P H P
