@@ -6,7 +6,6 @@ A Python class for managing a FileMaker 17 Server or FileMaker Cloud 17 server u
 
 A version including support for working with the fmsadmin command line tool is planned, but not yet implemented.
 
-<<<<<<< HEAD
 ## USAGE EXAMPLE
 
 The following example will display all available database, schedule, and client information for a server.
